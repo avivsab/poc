@@ -49,11 +49,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function StrsMenuBar(props) {
-    const {sorters, handleTableSearch} = props;
+    const {sorters, handleTableSearch, handleColumnSort} = props;
     const activeSorters = sorters.filter(item => item.sortedBy !== false);
 
     const handleSearch = (event) => {
         handleTableSearch(event.target.value)
+    }
+
+    const sortColumn = (sortObj) => {
+        handleColumnSort(sortObj)
     }
 
 
@@ -79,13 +83,16 @@ export default function StrsMenuBar(props) {
                             onChange={handleSearch}
                         />
                     </Search>
+                    <h3>SMART SORTERS: </h3>
                     <Stack spacing={2} direction="row">
                         {activeSorters.map(sorter => {
                             return <Button
                                 key={sorter.name}
                                 variant="outlined"
-                                color="secondary">
-                                {sorter.name}
+                                color="secondary"
+                                onClick={() => sortColumn(sorter)}
+                            >
+                               {sorter.name}
                             </Button>
                         })}
                     </Stack>
